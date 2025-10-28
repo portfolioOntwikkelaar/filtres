@@ -1,137 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Filtres d'Image - Studio</title>
   <link rel="stylesheet" href="style.css">
-  <title>filtres</title>
 </head>
 <body>
-  <div class="container">
-    <main>
-      <h1>
-          Appliquez des filtres à vos images
-      </h1>
+  <header>
+    <h1>🎨 Filtres d'Image</h1>
+    <p>Appliquez vos effets visuels préférés instantanément</p>
+  </header>
 
-      <form>
-          <label for="image" class="sr-only">Télécharger une image</label>
-          <input type="file" accept="image/png, image/jpg, image/jpeg" name="image" id="image">
-      </form>
+  <main class="app">
+    <section class="upload">
+      <label for="image" class="upload-label">
+        <input type="file" accept="image/png, image/jpg, image/jpeg" id="image">
+        <span>Télécharger une image</span>
+      </label>
+    </section>
 
-      <div class="container">
-          <canvas></canvas>
+    <section class="editor">
+      <canvas id="canvas"></canvas>
+    </section>
 
-          <div class="buttons">
-              <div class="filters">
-                  <button id="grayscale">Niveaux de Gris</button>
-                  <button id="monotone">Monotone Bleu</button>
-                  <button id="duotone">Bleu Orange</button>
-              </div>
-
-              <div class="actions">
-                  <button id="reset">Réinitialiser</button>
-                  <a id="download" download>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20px" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                      </svg>
-
-                      <span>Télécharger</span>
-                  </a>
-              </div>
-          </div>
+    <section class="controls">
+      <div class="filters">
+        <button id="grayscale">Gris</button>
+        <button id="monotone">Bleu</button>
+        <button id="duotone">Bleu/Orange</button>
       </div>
-
-
+      <div class="actions">
+        <button id="reset">Réinitialiser</button>
+        <a id="download" download>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="20" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+          </svg>
+          Télécharger
+        </a>
+      </div>
+    </section>
   </main>
 
+  <footer>
+    <p>✨ Créé avec passion pour le design & le code ✨</p>
+  </footer>
 
-  </div>
-
+  <script src="script.js"></script>
 </body>
-<script >
-  const canvas = document.querySelector('canvas');
-  const context = canvas.getContext('2d');
-
-  const grayscale = document.getElementById('grayscale');
-  const monotone = document.getElementById('monotone');
-  const duotone = document.getElementById('duotone');
-  const reset = document.getElementById('reset');
-  const download = document.getElementById('download');
-  const input = document.getElementById('image');
-
-  let imageWidth = null;
-  let imageHeight = null;
-  let originalData = null;
-
-  const image = new Image();
-  image.addEventListener('load', () => {
-      imageWidth = image.width;
-      imageHeight = image.height;
-      canvas.width = imageWidth;
-      canvas.height = imageHeight;
-      context.drawImage(image, 0, 0);
-  });
-
-  const reader = new FileReader();
-  reader.addEventListener('load', () => {
-      image.src = reader.result;
-      originalData = reader.result;
-  });
-
-  input.addEventListener('change', () => {
-      reader.readAsDataURL(input.files[0]);
-  });
-
-  const applyFilter = (filterType) => {
-      if(!imageWidth || !imageHeight) {
-          return alert("Please upload an image first!");
-      }
-
-      const image = context.getImageData(0, 0, imageWidth, imageHeight);
-      const imgData = image.data;
-
-      for(let i = 0; i < imgData.length; i += 4) {
-          const red = imgData[i];
-          const green = imgData[i + 1];
-          const blue = imgData[i + 2];
-
-          const grayValue = (red + green + blue) / 3;
-          const data = filters[filterType](grayValue);
-          imgData[i] = data[0];
-          imgData[i + 1] = data[1];
-          imgData[i + 2] = data[2];
-      }
-
-      context.putImageData(image, 0, 0);
-      download.href = canvas.toDataURL();
-  }
-
-  const filters = {
-      applyGrayscale: (gray) => {
-          return [gray, gray, gray];
-      },
-      applyMonotone: (gray) => {
-          return [gray - 40, gray - 40, gray + 80];
-      },
-      applyDuotone: (gray) => {
-          const diff = Math.round((128/100) * gray);
-          return [gray + diff, gray, 255 - diff];
-      },
-  }
-
-  const resetFilter = () => {
-      if(!image || !context || !originalData) {
-          return alert('There is nothing to reset');
-      }
-
-      image.src = originalData;
-      context.drawImage(image, 0, 0);
-  }
-
-  grayscale.addEventListener('click', () => applyFilter('applyGrayscale'));
-  monotone.addEventListener('click', () => applyFilter('applyMonotone'));
-  duotone.addEventListener('click', () => applyFilter('applyDuotone'));
-  reset.addEventListener('click', resetFilter);
-</script>
 </html>
