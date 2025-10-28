@@ -1,295 +1,168 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 :root {
-    --font: 'Montserrat', sans-serif;
-
-    --neutral: #1e2839;
-    --blue: #5c5cff;
-    --orange: #FF715B;
-    --yellow: #42EC57;
-
-    --padding-side: 2em;
-    --shadow: 0px 8px 24px rgba(0, 0, 0, 0.2);
+  --bg: #0f1116;
+  --card: rgba(255, 255, 255, 0.06);
+  --accent1: #4e9cff;
+  --accent2: #ff6f61;
+  --text: #fff;
+  --radius: 1rem;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: var(--font);
-}
-.container {
-  width: 100%;
-  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text);
 }
 
 body {
-    background-color: var(--neutral);
-    color: #FFF;
-    padding: 0 0.8em;
-    font-size: 19.5rem;
+  background: radial-gradient(circle at top right, #1a1c28, #0f1116 60%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow-x: hidden;
+  padding: 1rem;
 }
 
-main {
-    padding: 3rem 0;
-    margin-top: 2rem;
+header {
+  text-align: center;
+  margin-top: 1rem;
 }
 
-main, footer {
-    /* max-width: 64rem; */
-    margin: auto;
+header h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-footer {
-    text-align: center;
-    font-size: 1rem;
-    padding: 1rem 0;
-}
-
-footer svg {
-    width: 1.5rem;
-    margin-bottom: -0.25rem;
-}
-
-footer a {
-    color: #FFF;
-    text-decoration: none;
-    padding-bottom: 1px;
-    border-bottom: 1px solid #FFF;
-    transition: border-color 0.2s linear;
-}
-
-footer a:hover {
-    border-color: var(--orange);
-}
-
-h1 {
-    margin: auto;
-    width: max-content;
-    margin-bottom: 1.5em;
-    font-size: 1.5rem;
-    position: relative;
-}
-
-h1::after,
-#youtube::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -0.5rem;
-    width: 100%;
-    height: 2px;
-    background-image: linear-gradient(90deg, var(--blue), var(--orange), var(--yellow));
-}
-
-form {
-    margin-bottom: 1em;
-}
-
-canvas {
-    width: 100%;
-    height: auto;
-    background-color: #374A67;
-    margin-bottom: 1em;
-    box-shadow: var(--shadow);
-}
-
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-}
-
-.container {
-    margin-bottom: 1em;
-}
-
-.buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-    width: 32rem;
-    height: 12rem;
-}
-
-.filters {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-}
-
-.actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-}
-
-/* button design */
-#download,
-button,
-input::-webkit-file-upload-button {
-    font-weight: 600;
-    font-size: 1rem;
-    font-family: inherit;
-    border: none;
-    text-decoration: none;
-    line-height: 1;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s linear;
-    color: #FFF;
-    box-shadow: var(--shadow);
-}
-
-#reset,
-#download,
-input::-webkit-file-upload-button {
-    padding: 1em 1.5em;
-    border: 1px solid #FFF;
-    background-color: var(--neutral);
-}
-
-#download {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-#reset:hover,
-#download:hover,
-input::-webkit-file-upload-button:hover {
-    border: 1px solid var(--orange);
-    background-color: var(--orange);
-}
-
-#grayscale, #monotone, #duotone {
-    padding: 1.1em 1.5em;
-}
-
-/* grayscale button */
-#grayscale {
-    background-color: #616283;
-}
-
-#grayscale:hover {
-    background-color: #494a63;
-}
-
-/* blue monoton button */
-#monotone {
-    background-color: var(--blue);
-}
-
-#monotone:hover {
-    background-color: #4949c5;
-}
-
-/* duotone gradient button */
-#duotone {
-    background-color: transparent;
-    position: relative;
-}
-
-#duotone::before,
-#duotone::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transition: opacity 0.2s linear;
-    z-index: -1;
-}
-
-#duotone::before {
-    background-image: linear-gradient(90deg, var(--blue), var(--orange), var(--yellow));
-    opacity: 0.8;
-}
-
-#duotone:hover::before {
-    opacity: 0;
-}
-
-#duotone::after {
-    background-image: linear-gradient(90deg, var(--yellow), var(--orange), var(--blue));
-    opacity: 0;
-}
-
-#duotone:hover::after {
-    opacity: 0.8;
-}
-
-@media screen and (min-width: 880px) {
-    body {
-        padding: 0 2.5em;
-    }
-
-    .filters,
-    .buttons,
-    .actions {
-        flex-direction: row;
-    }
-
-    .buttons {
-        justify-content: space-between;
-    }
-}
-
-@media screen and (min-width: 1024px) {
-    h1 {
-        font-size: 2rem;
-    }
-
-    canvas {
-        width: 600px;
-        margin-bottom: 0;
-    }
-
-    .container {
-        display: grid;
-        grid-template-columns: max-content auto;
-        gap: 1em;
-    }
-
-    .buttons,
-    .filters {
-        flex-direction: column;
-    }
-
-    .buttons {
-        justify-content: space-between;
-    }
-
-    .actions {
-        flex-direction: row;
-        justify-content: end;
-    }
-
-    .actions a,
-    .actions button {
-        width: 100%;
-    }
-}
-
-
-#youtube {
-  position: absolute;
-  top: 1em;
-  right: 1em;
-  color: #FFF;
-  text-decoration: none;
+header p {
+  opacity: 0.7;
   font-size: 1rem;
 }
 
-#youtube svg {
-  width: 1.2rem;
-  margin-bottom: -0.15rem;
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 900px;
+}
+
+.upload-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+.upload-label:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.upload-label input {
+  display: none;
+}
+
+.editor {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #1b1e27;
+  box-shadow: var(--shadow);
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1rem;
+  backdrop-filter: blur(15px);
+  box-shadow: var(--shadow);
+}
+
+.filters, .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+button, a {
+  background: var(--accent1);
+  border: none;
+  padding: 0.8rem 1.4rem;
+  border-radius: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+button:hover, a:hover {
+  background: var(--accent2);
+  transform: translateY(-2px);
+}
+
+#reset {
+  background: transparent;
+  border: 1px solid var(--accent2);
+  color: var(--accent2);
+}
+
+#reset:hover {
+  background: var(--accent2);
+  color: #fff;
+}
+
+#download svg {
+  margin-right: 6px;
+  stroke: #fff;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .controls {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .filters, .actions {
+    flex: 1;
+    justify-content: space-evenly;
+  }
+
+  .editor {
+    max-height: 70vh;
+  }
 }
